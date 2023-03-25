@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hello 👋🏼</title>
+</head>
+<body>
+<p>
+    <h1>Welcome, <span sec:authentication="name"></span>! (<span sec:authentication="principal.authorities"></span>)</h1>
+<div th:if="${#strings.contains(#authentication.principal.authorities, 'ADMIN')}">
+    <a th:href="@{/admin/logout}">Logout</a>
+</div>
+</p>
+</body>
+</html>
