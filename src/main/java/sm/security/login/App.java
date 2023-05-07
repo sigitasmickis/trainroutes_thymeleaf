@@ -5,10 +5,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 import sm.security.login.user.CustomUserDetailsService;
 import sm.security.login.user.User;
 import sm.security.login.user.UserRepository;
@@ -43,11 +45,22 @@ public class App implements CommandLineRunner {
     private UserRepository repository;
 
     public static void main(String[] args) {
+//        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+//        messageSource.setBasenames("lang/messages");
+//////        messageSource.setDefaultEncoding("ISO-8859-1");
+
         SpringApplication.run(App.class, args);
+    }
+
+    @Bean
+    RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
     @Override
     public void run(String... args) throws Exception {
+
+
 
         repository.saveAll(List.of(
                 new User("min", passwordEncoder().encode("min"), Role.USER),

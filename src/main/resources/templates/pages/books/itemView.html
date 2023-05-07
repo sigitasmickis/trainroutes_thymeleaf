@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+>
+<head>
+    <meta charset="UTF-8"/>
+<!--    <link rel="stylesheet" data-th-href="@{/css/form.css}">-->
+    <title>Book view</title>
+</head>
+<body>
+<!--<div class="main-framework">-->
+    <div th:text="'Book title: ' + ${book.title}">dummy title</div>
+    <div th:text="'Book author: ' + ${book.author}">dummy author</div>
+    <div th:text="'Book ISBN: ' + ${book.isbn}">dummy isbn</div>
+<!--    <p>-->
+<!--        <a th:href="@{/books/{id}/edit(id=${book.id})}">Edit</a>-->
+<!--        <a th:href="@{/books/{id}/delete(id=${book.id})}">Delete</a>-->
+<!--    </p>-->
+    <p>
+        <a th:href="@{/books}">Back to all books</a>
+    </p>
+<!--</div>-->
+</body>
+</html>

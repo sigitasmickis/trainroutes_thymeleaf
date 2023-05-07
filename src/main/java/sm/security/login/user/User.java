@@ -6,7 +6,7 @@ import sm.security.login.Role;
 
 @Entity
 @RequiredArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @Data
 @Table(name = "users")
 public class User {
@@ -18,6 +18,7 @@ public class User {
     @NonNull
     @Column(nullable = false, unique = true, length = 30)
     private String username;
+
     @NonNull
     @Column(nullable = false, unique = false)
     private String password;

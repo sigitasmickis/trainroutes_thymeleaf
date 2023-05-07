@@ -3,10 +3,12 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
-    <title>Hello 👋🏼</title>
+    <title>Hello</title>
+    <link rel="stylesheet" data-th-href="@{/css/style.css}">
 </head>
 <body>
-  <h1>Hello 👋🏼</h1>
+<div class="main-framework">
+  <h1>Hello index</h1>
   <div sec:authorize="isAnonymous()">
   <p>
       <a th:href="@{/user/login}">Login</a>
@@ -20,5 +22,6 @@
             <a th:href="@{/user/logout}">Logout</a>
         </p>
        </div>
-  </body>
+</div>
+</body>
 </html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" data-th-href="@{/css/style.css}">
+    <title>books</title>
+</head>
+<body>
+    <th:block th:each="book : ${books}">
+        <a th:href="@{/book/{id}(id=${book.id})}">
+            <div th:text="${book.id} +
+            '. ' + ${book.author} +
+            '. ' + ${book.title}">Dummy book</div>
+        </a>
+    </th:block>
+</body>
+</html>

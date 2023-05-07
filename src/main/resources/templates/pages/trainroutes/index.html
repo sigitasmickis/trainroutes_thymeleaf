@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head data-th-replace="~{partials/head(title='trainroute index page')}"></head>
+
+<body>
+    <div class="flex-wrapper">
+        <table class="train-table">
+            <thead>
+                <tr>
+                    <th data-th-text="#{thead.tr.train_no}">Train number</th>
+                    <th data-th-text="#{thead.tr.city_from}">City From</th>
+                    <th data-th-text="#{thead.tr.city_to}">City To</th>
+                    <th data-th-text="#{thead.tr.depart_time}">Depart time</th>
+                    <th data-th-text="#{thead.tr.arrival_time}">Arrival time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-th-each="train : ${trains}">
+                    <td data-th-text="${train.trainNumber}"></td>
+                    <td data-th-text="${train.cityFrom}"></td>
+                    <td data-th-text="${train.cityTo}"></td>
+                    <td data-th-text="${train.departTime}"></td>
+                    <td data-th-text="${train.arrivalTime}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <form class="train-table-row-input">
+            <label class="form-label green-alert-text">Enter the Train Details:</label>
+            <div>
+                <label for="id-input">ID:</label>
+                <input type="number" id="id-input" name="id">
+            </div>
+            <div>
+                <label for="train-number-input">Train number:</label>
+                <input type="text" id="train-number-input" name="trainNumber" placeholder="TR-00000">
+            </div>
+            <div>
+                <label for="city-from-input">City From:</label>
+                <select id="city-from-input" name="cityFrom">
+                    <option style="display:none"></option>
+                    <option value="Vilnius">Vilnius</option>
+                    <option value="Kaunas">Kaunas</option>
+                    <option value="Klaipėda">Klaipėda</option>
+                </select>
+            </div>
+            <div>
+                <label for="city-to-input">City To:</label>
+                <select id="city-to-input" name="cityTo">
+                    <option style="display:none"></option>
+                    <option value="Vilnius">Vilnius</option>
+                    <option value="Kaunas">Kaunas</option>
+                    <option value="Klaipėda">Klaipėda</option>
+                </select>
+            </div>
+            <div>
+                <label name="time" for="time-input">Time:</label>t
+                <input type="time" id="time-input" name="time" step=60>
+            </div>
+            <button class="form-label green-alert-text" type="submit">Add</button>
+        </form>
+    </div>
+    <footer data-th-replace="~{partials/footer(pagetitle='trains')}"></footer>
+
+</body>
+
+</html>
