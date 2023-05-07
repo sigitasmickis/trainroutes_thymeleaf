@@ -26,17 +26,9 @@
             </tbody>
         </table>
         <form class="train-table-row-input">
-            <label class="form-label green-alert-text">Enter the Train Details:</label>
+            <label class="form-label green-alert-text" data-th-text="#{route.pickup.header}">Enter the Train Details:</label>
             <div>
-                <label for="id-input">ID:</label>
-                <input type="number" id="id-input" name="id">
-            </div>
-            <div>
-                <label for="train-number-input">Train number:</label>
-                <input type="text" id="train-number-input" name="trainNumber" placeholder="TR-00000">
-            </div>
-            <div>
-                <label for="city-from-input">City From:</label>
+                <label for="city-from-input" data-th-text="#{route.city.from}">City From:</label>
                 <select id="city-from-input" name="cityFrom">
                     <option style="display:none"></option>
                     <option value="Vilnius">Vilnius</option>
@@ -45,7 +37,7 @@
                 </select>
             </div>
             <div>
-                <label for="city-to-input">City To:</label>
+                <label for="city-to-input" data-th-text="#{route.city.to}">City To:</label>
                 <select id="city-to-input" name="cityTo">
                     <option style="display:none"></option>
                     <option value="Vilnius">Vilnius</option>
@@ -53,11 +45,7 @@
                     <option value="Klaipėda">Klaipėda</option>
                 </select>
             </div>
-            <div>
-                <label name="time" for="time-input">Time:</label>t
-                <input type="time" id="time-input" name="time" step=60>
-            </div>
-            <button class="form-label green-alert-text" type="submit">Add</button>
+            <button class="form-label green-alert-text" data-th-text="#{route.pickup.search}" type="submit">Search</button>
         </form>
     </div>
     <footer data-th-replace="~{partials/footer(pagetitle='trains')}"></footer>

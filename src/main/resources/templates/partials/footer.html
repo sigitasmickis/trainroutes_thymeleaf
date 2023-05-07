@@ -1,11 +1,10 @@
 <footer>
     <div class="flex-wrapper">
-        <p style="footer" data-th-text="${pagetitle}"></p>
-        <p style="footer" data-th-text="#{footer.rights.declaration}"></p>
-        <p>Sigitas Mickis 2023</p>
+        <div class="footer" data-th-text="#{footer.rights.declaration}"></div>
+        <div class="footer">Sigitas Mickis 2023</div>
     </div>
     <ul class="language-bar">
-        <li><a data-th-href="@{/${pagetitle}?lang=lt}">LT</a></li>
-        <li><a data-th-href="@{/${pagetitle}?lang=en}">EN</a></li>
+        <li><a data-th-href="@{/trains?lang=lt}">LT</a></li>
+        <li><a data-th-href="@{/trains?lang=en}">EN</a></li>
     </ul>
 </footer>

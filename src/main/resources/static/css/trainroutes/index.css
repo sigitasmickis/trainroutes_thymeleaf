@@ -3,12 +3,15 @@ body {
 }
 
 .language-bar {
+    display: inline-flex;
+}
+.language-bar li {
     list-style: none;
-    display: inline;
+    margin-right: 10px;
 }
 
 .footer {
-    margin-right: 3%;
+   margin-right: 10px;
 }
 
 .flex-wrapper {
@@ -19,7 +22,7 @@ body {
 }
 
 .train-table {
-    width: 64%;
+    width: 70%;
     border-collapse: collapse;
     border: 1px solid black;
     margin-right: 2%;
@@ -41,7 +44,7 @@ td {
 }
 
 .train-table-row-input {
-    width: 32%;
+    width: 30%;
     border: 1px solid black;
     display: flex;
     padding: 5px;

@@ -8,19 +8,19 @@
 </head>
 <body>
 <div class="main-framework">
-  <h1>Hello index</h1>
-  <div sec:authorize="isAnonymous()">
-  <p>
+  <h1 class="hello">Hello</h1>
+  <div class="index-div" sec:authorize="isAnonymous()">
+  <p class="index">
       <a th:href="@{/user/login}">Login</a>
   </p>
-      <p>
+      <div class="index">
      <a th:href="@{/user/new}">Register</a>
-      </p>
+      </div>
   </div>
     <div sec:authorize="isAuthenticated()">
-        <p>
+        <div class="index">
             <a th:href="@{/user/logout}">Logout</a>
-        </p>
+        </div>
        </div>
 </div>
 </body>

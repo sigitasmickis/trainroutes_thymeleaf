@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Login form</title>
+    <link rel="stylesheet" data-th-href="@{/css/style.css}">
 </head>
 <body>
+    <div class="main-framework">
        <form th:action="@{/user/create}" th:object="${user}" method="post">
         <div><label> User name: <input type="text" th:field="*{username}"></label></div>
         <div>
             <label> Password: <input type="password" th:field="*{password}"></label>
         </div>
         <div><input type="submit" value="Register"/></div>
-    </form>
+        </form>
+    </div>
 </body>
 </html>

@@ -4,9 +4,43 @@
 
 .main-framework {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 50vh;
+    height: 70vh;
 
+
+}
+
+.index-div {
+    align-items: center;
+}
+
+.index a {
+    font-size: 13pt;
+    color:brown;
+}
+
+.hello {
+    margin-right: 15px;
+}
+
+.main-framework form {
+    display: flex;
+    padding: 5px;
+    flex-direction: column;
+}
+
+.main-framework form div {
+    display: flex;
+    align-items: center;
+}
+
+form input {
+    margin: 5px;
+    flex-grow: 1;
+    font-size: 13pt;
+    color:brown;
+    text-align: left;
+    height: fit-content;
 }
