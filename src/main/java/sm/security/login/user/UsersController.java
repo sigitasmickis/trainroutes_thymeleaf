@@ -3,6 +3,7 @@ package sm.security.login.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,9 @@ import sm.security.login.Role;
 
 @Controller
 public class UsersController {
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
@@ -28,7 +32,9 @@ public class UsersController {
     public String createNewUser(User user) {
 
         user.setRole(Role.USER);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User saveduser = repository.save(user);
+
         logger.info("new user created: {}", saveduser);
         return "redirect:/user/login";
 
