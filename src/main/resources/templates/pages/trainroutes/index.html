@@ -25,30 +25,34 @@
                 </tr>
             </tbody>
         </table>
-        <form class="train-table-row-input">
+        <form action="#" data-th-action="@{/trains/route}" method="post" class="train-table-row-input">
             <label class="form-label green-alert-text" data-th-text="#{route.pickup.header}">Enter the Train Details:</label>
             <div>
                 <label for="city-from-input" data-th-text="#{route.city.from}">City From:</label>
                 <select id="city-from-input" name="cityFrom">
                     <option style="display:none"></option>
-                    <option value="Vilnius">Vilnius</option>
-                    <option value="Kaunas">Kaunas</option>
-                    <option value="Klaipėda">Klaipėda</option>
+                    <option data-th-each="city : ${cities}" date-th-value="${city.name}" data-th-text="${city.name}">
+                        City option n</option>
                 </select>
             </div>
             <div>
                 <label for="city-to-input" data-th-text="#{route.city.to}">City To:</label>
                 <select id="city-to-input" name="cityTo">
                     <option style="display:none"></option>
-                    <option value="Vilnius">Vilnius</option>
-                    <option value="Kaunas">Kaunas</option>
-                    <option value="Klaipėda">Klaipėda</option>
+                    <option data-th-each="city : ${cities}" date-th-value="${city.name}" data-th-text="${city.name}">
+                        City option n</option>
                 </select>
             </div>
             <button class="form-label green-alert-text" data-th-text="#{route.pickup.search}" type="submit">Search</button>
         </form>
     </div>
-    <footer data-th-replace="~{partials/footer(pagetitle='trains')}"></footer>
+    <footer>
+        <div data-th-replace="~{partials/footer(pagetitle='trains')}"></div>
+        <ul class="language-bar">
+            <li><a data-th-href="@{/trains?lang=lt}">LT</a></li>
+            <li><a data-th-href="@{/trains?lang=en}">EN</a></li>
+        </ul>
+    </footer>
 
 </body>
 

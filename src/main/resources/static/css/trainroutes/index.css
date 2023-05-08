@@ -21,6 +21,10 @@ body {
     padding: 40px;
 }
 
+footer .flex-wrapper {
+    align-items: baseline;
+}
+
 .train-table {
     width: 70%;
     border-collapse: collapse;
