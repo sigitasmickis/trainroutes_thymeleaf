@@ -16,15 +16,19 @@ Thymeleaf
 
 Tik user, galima jungtis jau įvestu: name: min, pass: min. Naujų user sukūrimas taip pat funkcionalus.
 
-Prisijungus funkcionalumas minimalus:
+Prisijungus praplėstas funkcionalumas:
 
- – yra atvaizduojamas REST sukeltas traukinių sąrašas,
+- yra atvaizduojamas REST sukeltas traukinių sąrašas,
  
- - ir du laukai paieškai tiesioginio maršruto tarp miestų.
+- ir du laukai paieškai tiesioginio maršruto tarp miestų.
 
 - Jeigu maršrutas randamas, atsiranda galimybė pirkti bilietą.
 
 - Taip pat galima peržiūrėti visus savo turimus bilietus (mygtukas "Mano bilietai")
+
+- Galima redaguoti esamus traukinius
+
+- Galima ištrinti esamus traukinius
 
  Funkcionalumas apsaugotas tiek frontende, tiek backende exception handling.
 
