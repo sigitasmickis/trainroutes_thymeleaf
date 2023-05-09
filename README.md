@@ -14,12 +14,16 @@ Programos paleidimas
 
 Thymeleaf 
 
-Tik user, galima jungtis jau įvestu: name: min, pass: min. Naujų user sukūrimas buvo funkcionalus, bet neištestuotas.
+Tik user, galima jungtis jau įvestu: name: min, pass: min. Naujų user sukūrimas taip pat funkcionalus.
 
 Prisijungus funkcionalumas minimalus:
  – yra atvaizduojamas REST sukeltas traukinių sąrašas,
  
  - ir du laukai paieškai tiesioginio maršruto tarp miestų.
+
+- Jeigu maršrutas randamas, atsiranda galimybė pirkti bilietą.
+
+- Taip pat galima peržiūrėti visus savo turimus bilietus (mygtukas "Mano bilietai")
 
  Funkcionalumas apsaugotas tiek frontende, tiek backende exception handling.
 
