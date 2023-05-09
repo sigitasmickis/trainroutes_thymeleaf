@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sm.security.login.city.CitiesDTO;
 import sm.security.login.ticket.TicketDTO;
 import sm.security.login.ticket.TicketsDTO;
@@ -45,7 +46,6 @@ public class TrainController {
     }
 
 
-
     @PostMapping("/trains/route")
     public String routeFind(@RequestParam String cityFrom,
                             @RequestParam String cityTo,
@@ -56,15 +56,15 @@ public class TrainController {
                         "http://localhost:8082//v1//trains//route?from="
                                 + cityFrom + "&to=" + cityTo, TrainsDTO.class)
                 , HttpStatus.OK);
-            model.addAttribute("trains", trainsDTOr.getBody().getTrainsDTO());
-            model.addAttribute("notfound", false);
-            return "/pages/trainroutes/routes";
+        model.addAttribute("trains", trainsDTOr.getBody().getTrainsDTO());
+        model.addAttribute("notfound", false);
+        return "/pages/trainroutes/routes";
     }
 
     @ExceptionHandler(HttpClientErrorException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleRouteNotFound404(HttpClientErrorException e, Model model) {
-        String notFoundCities = e.getMessage().replace("404 :","");
+        String notFoundCities = e.getMessage().replace("404 :", "");
         model.addAttribute("errormessage", notFoundCities);
         model.addAttribute("notfound", true);
         return "/pages/trainroutes/routes";
@@ -80,6 +80,20 @@ public class TrainController {
         return "redirect:/tickets";
     }
 
+    @PostMapping("/train/update/{trainNo}")
+    public String updateTrain(TrainDTO trainDTO,
+                              @PathVariable String trainNo,
+                              RedirectAttributes redirectAttributes) {
+        trainDTO.setTrainNumber(trainNo);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<TrainDTO> requestEntity = new HttpEntity<>(trainDTO, headers);
+        String url = "http://localhost:8082//v1//trains//" + trainDTO.getTrainNumber();
+        restTemplate.put(url, requestEntity);
+        redirectAttributes.addAttribute("message", trainNo + " updated succesfully");
+        return "redirect:/trains/edit";
+    }
+
     @GetMapping("/tickets")
     public String getAllTickets(Model model) {
         ResponseEntity<TicketsDTO> ticketDTOResponseEntity = new ResponseEntity<>(
@@ -89,6 +103,47 @@ public class TrainController {
         model.addAttribute("tickets", ticketDTOResponseEntity.getBody().getTicketsDTO());
         return "/pages/trainroutes/tickets";
 
+    }
+
+    @PostMapping("/trains/edit")
+    public String loadTrainToEdit(@RequestParam(required = false) String trainNo,
+                                  Model model) {
+        TrainDTO trainDTO = restTemplate.getForObject(
+                "http://localhost:8082//v1//trains//" + trainNo, TrainDTO.class);
+        ResponseEntity<TrainsDTO> trainsDTO = new ResponseEntity<>(
+                restTemplate.getForObject("http://localhost:8082//v1//trains", TrainsDTO.class)
+                , HttpStatus.OK);
+
+        ResponseEntity<CitiesDTO> citiesDTO = new ResponseEntity<>(
+                restTemplate.getForObject("http://localhost:8082//v1//trains//cities", CitiesDTO.class)
+                , HttpStatus.OK);
+        model.addAttribute("cities", citiesDTO.getBody().getSitiesDTO());
+        model.addAttribute("trains", trainsDTO.getBody().getTrainsDTO());
+        model.addAttribute("trainEdit", trainDTO);
+        return "/pages/trainroutes/admin/edit";
+    }
+
+    @DeleteMapping("/train/delete/{trainNo}")
+    public String deleteTrain(@PathVariable("trainNo") String trainNo,
+                              RedirectAttributes redirectAttributes) {
+        restTemplate.delete("http://localhost:8082//v1//trains//" + trainNo);
+        redirectAttributes.addAttribute("message", trainNo + " deleted succesfully");
+        return "redirect:/trains/edit";
+    }
+
+    @GetMapping("trains/edit")
+    public String editTrains(@RequestParam(value = "message", required = false) String message, Model model) {
+        ResponseEntity<TrainsDTO> trainsDTO = new ResponseEntity<>(
+                restTemplate.getForObject("http://localhost:8082//v1//trains", TrainsDTO.class)
+                , HttpStatus.OK);
+
+        ResponseEntity<CitiesDTO> citiesDTO = new ResponseEntity<>(
+                restTemplate.getForObject("http://localhost:8082//v1//trains//cities", CitiesDTO.class)
+                , HttpStatus.OK);
+        model.addAttribute("cities", citiesDTO.getBody().getSitiesDTO());
+        model.addAttribute("trains", trainsDTO.getBody().getTrainsDTO());
+        model.addAttribute("message", message);
+        return "/pages/trainroutes/admin/edit";
     }
 
     private Integer getUserId() {
