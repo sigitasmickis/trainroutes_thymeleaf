@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head data-th-replace="~{partials/head(title='trains create')}"></head>
+
+<body>
+<div class="flex-wrapper">
+    <table class="train-table">
+        <thead>
+        <tr>
+            <th data-th-text="#{thead.tr.train_no}">Train number</th>
+            <th data-th-text="#{thead.tr.city_from}">City From</th>
+            <th data-th-text="#{thead.tr.city_to}">City To</th>
+            <th data-th-text="#{thead.tr.depart_time}">Depart time</th>
+            <th data-th-text="#{thead.tr.arrival_time}">Arrival time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="train : ${trains}">
+            <td data-th-text="${train.trainNumber}"></td>
+            <td data-th-text="${train.cityFrom}"></td>
+            <td data-th-text="${train.cityTo}"></td>
+            <td data-th-text="${train.departTime}"></td>
+            <td data-th-text="${train.arrivalTime}"></td>
+            <td data-th-unless="${trainEdit}">
+                <form action="#" data-th-action="@{/trains/edit}" method="post">
+                    <input type="hidden" name="trainNo" data-th-value="${train.trainNumber}"/>
+                    <button type="submit" data-th-text="#{edit.trains.edit.button}">Edit</button>
+                </form>
+            </td>
+            <td data-th-unless="${trainEdit}">
+                <form action="#" data-th-action="@{/train/delete/{trainNo}(trainNo=${train.trainNumber})}"
+                      data-th-method="delete">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit" value="delete" data-th-text="#{edit.trains.delete.button}">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <form data-th-action="@{/train/create}" data-th-object="${trainCreate}"
+          class="train-table-row-input" method="post">
+        <label class="form-label green-alert-text"
+               data-th-text="#{edit.picker.title}">Enter the Train Details:</label>
+        <div>
+            <label for="train-number-input" data-th-text="#{thead.tr.train_no}">Train number:</label>
+            <input type="text" id="train-number-input" name="trainNumber" data-th-field="*{trainNumber}"/>
+        </div>
+        <div>
+            <label for="city-from-input" data-th-text="#{thead.tr.city_from}">City From:</label>
+            <select id="city-from-input" name="cityFrom" data-th-field="*{cityFrom}">
+                <!--                    <option style="display:none"></option>-->
+                <option data-th-each="city : ${cities}" data-th-selected="${trainCreate.cityFrom == city.name}"
+                        data-th-value="${city.name}" data-th-text="${city.name}">City From option n
+                </option>
+            </select>
+        </div>
+        <div>
+            <label for="city-to-input" data-th-text="#{thead.tr.city_to}">City To:</label>
+            <select id="city-to-input" name="cityTo" data-th-field="*{cityTo}">
+                <option data-th-each="city : ${cities}" data-th-selected="${trainCreate.cityTo == city.name}"
+                        data-th-value="${city.name}" data-th-text="${city.name}">City To option n
+                </option>
+            </select>
+        </div>
+        <div>
+            <label name="time" for="depart-time-input" data-th-text="#{thead.tr.depart_time}">Depart time:</label>t
+            <input type="time" id="depart-time-input" name="depart-time" step=60
+                   data-th-value="${trainCreate.departTime}" data-th-field="*{departTime}">
+        </div>
+        <div>
+            <label name="time" for="arrival-time-input" data-th-text="#{thead.tr.arrival_time}">Arrival time:</label>t
+            <input type="time" id="arrival-time-input" name="arrival-time" step=60
+                   data-th-value="${trainCreate.arrivalTime}" data-th-field="*{arrivalTime}">
+        </div>
+        <button class="form-label green-alert-text" type="submit"
+                data-th-text="#{edit.trains.create.button}">Create
+        </button>
+    </form>
+</div>
+<footer>
+    <div class="flex-wrapper">
+        <div class="footer" data-th-text="#{footer.rights.declaration}"></div>
+        <div class="footer">Sigitas Mickis 2023</div>
+        <h4 data-th-text="#{footer.creating.new.route.message}"></h4>
+    </div>
+    <!--    <ul class="language-bar">-->
+    <!--        <li><a data-th-href="@{/trains/edit}">LT</a></li>-->
+    <!--        <li><a data-th-href="@{/trains/edit}">EN</a></li>-->
+    <!--    </ul>-->
+</footer>
+
+</body>
+
+</html>
