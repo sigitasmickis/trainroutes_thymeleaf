@@ -1,21 +1,24 @@
 package sm.security.login.train;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ModelAndView;
-import sm.security.login.book.Book;
 import sm.security.login.city.CitiesDTO;
+import sm.security.login.ticket.TicketDTO;
+import sm.security.login.ticket.TicketsDTO;
+import sm.security.login.user.User;
+import sm.security.login.user.UserRepository;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class TrainController {
@@ -24,6 +27,8 @@ public class TrainController {
 
     @Autowired
     RestTemplate restTemplate;
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("/trains")
     public String trains(Model model) {
@@ -39,13 +44,6 @@ public class TrainController {
         return "/pages/trainroutes/index";
     }
 
-//    @PostMapping("/trains/route")
-//    public ModelAndView redirectRouteSearch(@RequestParam String cityFrom,
-//                                            @RequestParam String cityTo,
-//                                            HttpServletRequest request) {
-//        return  new ModelAndView("redirect:/trains/route?cityFrom="
-//                + cityFrom + "&to=" + cityTo);
-//    }
 
 
     @PostMapping("/trains/route")
@@ -60,7 +58,7 @@ public class TrainController {
                 , HttpStatus.OK);
             model.addAttribute("trains", trainsDTOr.getBody().getTrainsDTO());
             model.addAttribute("notfound", false);
-            return "/pages/trainroutes/tickets";
+            return "/pages/trainroutes/routes";
     }
 
     @ExceptionHandler(HttpClientErrorException.class)
@@ -69,6 +67,38 @@ public class TrainController {
         String notFoundCities = e.getMessage().replace("404 :","");
         model.addAttribute("errormessage", notFoundCities);
         model.addAttribute("notfound", true);
+        return "/pages/trainroutes/routes";
+    }
+
+    @PostMapping("/tickets/buy")
+    public String buyTicket(@RequestBody String data, @RequestParam String trainNo, Model model) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<TicketsDTO> requestEntity = new HttpEntity<>(new TicketsDTO(), headers);
+        String url = "http://localhost:8082//v1//users//" + getUserId() + "//buy_tickets?trainNo=" + trainNo;
+        restTemplate.postForObject(url, requestEntity, TicketsDTO.class);
+        return "redirect:/tickets";
+    }
+
+    @GetMapping("/tickets")
+    public String getAllTickets(Model model) {
+        ResponseEntity<TicketsDTO> ticketDTOResponseEntity = new ResponseEntity<>(
+                restTemplate.getForObject(
+                        "http://localhost:8082//v1//users//" + getUserId() + "//get_tickets", TicketsDTO.class)
+                , HttpStatus.OK);
+        model.addAttribute("tickets", ticketDTOResponseEntity.getBody().getTicketsDTO());
         return "/pages/trainroutes/tickets";
+
+    }
+
+    private Integer getUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        User userPojo = userRepository.findByUsername(currentUserName);
+        if (userPojo != null) {
+            return userPojo.getId();
+        } else {
+            throw new RuntimeException("UserId getting error");
+        }
     }
 }

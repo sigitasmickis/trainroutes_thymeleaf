@@ -47,7 +47,14 @@
         </form>
     </div>
     <footer>
-        <div data-th-replace="~{partials/footer(pagetitle='trains')}"></div>
+        <footer>
+            <div class="flex-wrapper">
+                <div class="footer" data-th-text="#{footer.rights.declaration}"></div>
+                <div class="footer">Sigitas Mickis 2023</div>
+                <a data-th-href="@{/tickets}">
+                    <button data-th-text="#{footer.switch.to.tickets.button}">Switch to tickets></button></a>
+            </div>
+        </footer>
         <ul class="language-bar">
             <li><a data-th-href="@{/trains?lang=lt}">LT</a></li>
             <li><a data-th-href="@{/trains?lang=en}">EN</a></li>

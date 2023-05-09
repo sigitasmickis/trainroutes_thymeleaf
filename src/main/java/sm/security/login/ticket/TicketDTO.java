@@ -4,10 +4,9 @@ import lombok.*;
 
 @Getter
 @Setter
-@ToString
-@RequiredArgsConstructor
 @NoArgsConstructor(force = true)
-@AllArgsConstructor
+@RequiredArgsConstructor
+@ToString
 @EqualsAndHashCode
 public class TicketDTO {
 
@@ -17,12 +16,16 @@ public class TicketDTO {
     @NonNull
     private String trainNumber;
 
+    @NonNull
     private String cityFrom;
 
+    @NonNull
     private String cityTo;
 
+    @NonNull
     private String departTime;
 
+    @NonNull
     private String arrivalTime;
 
     @NonNull

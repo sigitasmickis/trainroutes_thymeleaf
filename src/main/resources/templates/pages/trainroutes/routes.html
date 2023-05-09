@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head data-th-replace="~{partials/head(title='route search')}"></head>
+
+<body>
+<h3 data-th-if =${notfound} data-th-text="#{route.notfound.from} + ' '
+        + ${errormessage}">Not found message</h3>
+<div data-th-unless = "${notfound}" class="flex-wrapper">
+    <table class="train-table">
+        <thead>
+        <tr>
+            <th data-th-text="#{thead.tr.train_no}">Train number</th>
+            <th data-th-text="#{thead.tr.city_from}">City From</th>
+            <th data-th-text="#{thead.tr.city_to}">City To</th>
+            <th data-th-text="#{thead.tr.depart_time}">Depart time</th>
+            <th data-th-text="#{thead.tr.arrival_time}">Arrival time</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr data-th-each="train : ${trains}">
+            <td data-th-text="${train.trainNumber}"></td>
+            <td data-th-text="${train.cityFrom}"></td>
+            <td data-th-text="${train.cityTo}"></td>
+            <td data-th-text="${train.departTime}"></td>
+            <td data-th-text="${train.arrivalTime}"></td>
+            <td>
+                <form action="#" data-th-action="@{/tickets/buy}" method="post">
+                    <input type="hidden" name="trainNo" data-th-value="${train.trainNumber}" />
+                    <button type="submit" data-th-text="#{ticket.buy.button}">Submit</button>
+                </form>
+            </td>
+            </tr>
+        </tbody>
+    </table>
+<!--    <form action="#" data-th-action="@{/trains/route}" method="post" class="train-table-row-input">-->
+
+<!--    </form>-->
+</div>
+<footer>
+    <div class="flex-wrapper">
+        <div class="footer" data-th-text="#{footer.rights.declaration}"></div>
+        <div class="footer">Sigitas Mickis 2023</div>
+        <a data-th-href="@{/trains}">
+            <button data-th-text="#{footer.back.to.index.button}">Back to trains></button></a>
+    </div>
+</footer>
+
+</body>
+
+</html>
