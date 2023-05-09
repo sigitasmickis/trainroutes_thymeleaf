@@ -25,6 +25,10 @@ footer .flex-wrapper {
     align-items: baseline;
 }
 
+footer h4 {
+    color: chocolate;
+}
+
 .train-table {
     width: 70%;
     border-collapse: collapse;
